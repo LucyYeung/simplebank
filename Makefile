@@ -7,4 +7,7 @@ createdb:
 dropdb:
 	docker exec -it postgres12 dropdb simple_bank
 
-.PHONY: postgres createdb dropdb
+migrateup:
+	migrate -path db/migration -database "postgresql://root:password@localhost:5432/simple_bank?sslmode=disable" -verbose up
+
+.PHONY: postgres createdb dropdb migrateup
