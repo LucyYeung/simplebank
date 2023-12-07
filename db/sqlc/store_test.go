@@ -38,5 +38,17 @@ func TestTransferTx(t *testing.T) {
 
 		result := <-results
 		require.NotEmpty(t, result)
+
+		// check transfer
+		transfer := result.Transfer
+		require.NotEmpty(t, transfer)
+		require.Equal(t, account1.ID, transfer.FromAccountID)
+		require.Equal(t, account2.ID, transfer.ToAccountID)
+		require.Equal(t, amount, transfer.Amount)
+		require.NotZero(t, transfer.ID)
+		require.NotZero(t, transfer.CreatedAt)
+
+		_, err = store.GetTransfer(context.Background(), transfer.ID)
+		require.NoError(t, err)
 	}
 }
