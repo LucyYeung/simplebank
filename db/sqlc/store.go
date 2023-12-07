@@ -33,3 +33,38 @@ func (s *Store) execTx(ctx context.Context, fn func(*Queries) error) error {
 	}
 	return tx.Commit()
 }
+
+type TransferTxParams struct {
+	FromAccountID int64
+	ToAccountID   int64
+	Amount        int64
+}
+
+type TransferTxResult struct {
+	Transfer    Transfer
+	FromAccount Account
+	ToAccount   Account
+	FromEntry   Entry
+	ToEntry     Entry
+}
+
+func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
+	var result TransferTxResult
+
+	err := store.execTx(ctx, func(q *Queries) error {
+		var err error
+
+		// transfer money from one account to another
+		result.Transfer, err = q.CreateTransfer(ctx, CreateTransferParams{
+			FromAccountID: arg.FromAccountID,
+			ToAccountID:   arg.ToAccountID,
+			Amount:        arg.Amount,
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+
+	return result, err
+}
