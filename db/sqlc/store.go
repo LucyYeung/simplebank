@@ -30,6 +30,7 @@ func (s *Store) execTx(ctx context.Context, fn func(*Queries) error) error {
 		if rbErr := tx.Rollback(); rbErr != nil {
 			return fmt.Errorf("tx err: %v, rb err: %v", err, rbErr)
 		}
+		return err
 	}
 	return tx.Commit()
 }
@@ -81,6 +82,9 @@ func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (Trans
 		if err != nil {
 			return err
 		}
+
+		// TODO: update account's balance
+
 		return nil
 	})
 
