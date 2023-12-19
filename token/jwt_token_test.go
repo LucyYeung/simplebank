@@ -10,7 +10,7 @@ import (
 )
 
 func TestJWTMaker(t *testing.T) {
-	maker, err := NewJWTToken(util.RandomString(32))
+	maker, err := NewJWTMaker(util.RandomString(32))
 	require.NoError(t, err)
 	require.NotEmpty(t, maker)
 
@@ -35,7 +35,7 @@ func TestJWTMaker(t *testing.T) {
 }
 
 func TestExpiredJWTToken(t *testing.T) {
-	maker, err := NewJWTToken(util.RandomString(32))
+	maker, err := NewJWTMaker(util.RandomString(32))
 	require.NoError(t, err)
 	require.NotEmpty(t, maker)
 
@@ -59,7 +59,7 @@ func TestInvalidJWTToken(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 
-	maker, err := NewJWTToken(util.RandomString(32))
+	maker, err := NewJWTMaker(util.RandomString(32))
 	require.NoError(t, err)
 	require.NotEmpty(t, maker)
 
