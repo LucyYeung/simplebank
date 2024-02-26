@@ -5,7 +5,7 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: arn:aws:iam::385792460968:user/terminal
-      username: terminal
+    - rolearn: arn:aws:iam::385792460968:role/simplebank-github-actions-role
+      username: simplebank-github-actions-role
       groups:
         - system:masters
